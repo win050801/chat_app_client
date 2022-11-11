@@ -59,7 +59,6 @@ const SignUpScreen = ({ navigation }) => {
     
         else if(input.confirmPassword !== input.password)
         {
-            console.log(input.password);
             return Alert.alert(
                 "Lỗi",
                 "Vui lòng nhập giống mật khẩu trên"
@@ -70,8 +69,6 @@ const SignUpScreen = ({ navigation }) => {
     };
 
     
-
-    console.log(input);
     const submitData = async (event) => {
         event.preventDefault();
         if(validate()==true){
@@ -81,12 +78,10 @@ const SignUpScreen = ({ navigation }) => {
             phonenumber,
             password,
         });
-        console.log(data);
         if (data.status === false) {
             Alert.alert(
                 data.msg
             );
-            console.log(data.msg);
         }
         if (data.status === true) {
             console.log("Thanh cong");
@@ -106,7 +101,7 @@ const SignUpScreen = ({ navigation }) => {
     return (
         <View style={style.main}>
             <ImageBackground
-                source={require("../image/bg.png")}
+                source={require("../../../assets/bg.png")}
                 resizeMode="cover"
                 style={style.image}
             >
@@ -117,7 +112,7 @@ const SignUpScreen = ({ navigation }) => {
                 <View style={{ alignItems: "center" }}>
                     <Image
                         style={{ width: 250, height: 250 }}
-                        source={require("../image/avata.png")}
+                        source={require("../../../assets/avata.png")}
                     />
                 </View>
                 <Text style={style.title}>Create a account</Text>

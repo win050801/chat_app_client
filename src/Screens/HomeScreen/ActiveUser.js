@@ -8,7 +8,7 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import { Button, Menu, Divider, Provider } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 
-const ActiveUser = (props,) => {
+const ActiveUser = (props) => {
     const navigation = useNavigation();
     var user = props.user
     // console.log(user);
@@ -20,6 +20,7 @@ const ActiveUser = (props,) => {
                 id: id
             });
             setdata(data)
+            // console.log(setdata(data));
         }
         fetchData();
     });
@@ -50,7 +51,7 @@ const ActiveUser = (props,) => {
                                 Thêm bạn
                             </Button> */}
                             {/* <Divider /> */}
-                            <TouchableOpacity onPress={()=>navigation.navigate("TaoNhom")}>
+                            <TouchableOpacity onPress={()=>navigation.navigate("TaoNhom",{data,user})}>
                                 <Button icon={{ uri: 'https://cdn-icons-png.flaticon.com/512/694/694642.png' }}>
                                     Tạo nhóm
                                 </Button>

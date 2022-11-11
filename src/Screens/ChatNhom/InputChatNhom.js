@@ -11,10 +11,30 @@ import {
 import { Api } from "../../Global/Axios/Api";
 
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
-import { theme } from "../../theme";
+import { theme } from "../../Mau/theme";
 
-const ChatInput = () => {
-    const [messages, setMessages] = useState('');
+const InputChatNhom = ({roomChat,user,setMessages,messages}) => {
+    const [message, setMessage] = useState('');
+
+	const sendMessage = async ()=>{
+		const respon = await Api.post(`http://192.168.14.106:5000/api/messages/addmsg`, { 
+            from:user._id,
+			to:roomChat.id,
+			message:message,
+			namesend:user.username,
+			avatarImage:user.avatarImage
+        });
+		console.log(messages);
+		const mess ={
+			fromSelf:true,
+			message:message
+			
+		}
+		const messTam = [...messages]
+		messTam.push(mess)
+		setMessages(messTam)
+
+	}
 	return (
 		<View style={styles.container}>
             <View style={styles.innerContainer}>
@@ -26,7 +46,7 @@ const ChatInput = () => {
                         multiline
                         placeholder="Type something..." 
                         style={styles.input}
-						onChangeText={text => setMessages(text)}
+						onChangeText={text => setMessage(text)}
                     />
                     <TouchableOpacity>
                         <Icon name="paperclip" size={23} color={theme.colors.description}/>
@@ -39,8 +59,8 @@ const ChatInput = () => {
                     </TouchableOpacity>
                 </View>
                 <View>
-                <TouchableOpacity style={styles.sendButton}>
-                        <Icon name={messages ? "send" : "microphone" } size={23} color={theme.colors.white}/>
+                <TouchableOpacity style={styles.sendButton} onPress={sendMessage}>
+                        <Icon name={message ? "send" : "microphone" } size={23} color={theme.colors.white}/>
                 </TouchableOpacity>
                 </View>
             </View>
@@ -153,4 +173,4 @@ const styles = StyleSheet.create({
 	},
 });
 
-export default ChatInput;
+export default InputChatNhom;

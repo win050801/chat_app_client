@@ -9,7 +9,7 @@ export function MessageScreen({navigation,route}) {
 // console.log(route.params);
   return(
     <View style={{flex:1}}>
-      <ChatHeader/>
+      <ChatHeader route={route} />
       <MessengerList route={route}/>
       <ChatInput route={route} />
     </View>

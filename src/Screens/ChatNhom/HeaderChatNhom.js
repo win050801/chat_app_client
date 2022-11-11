@@ -4,10 +4,10 @@ import { useNavigation } from "@react-navigation/native";
 import Icon from "@expo/vector-icons/FontAwesome";
 import Icon2 from "@expo/vector-icons/AntDesign";
 
-import { theme } from "../../theme";
+import { theme } from "../../Mau/theme";
 
-const ChatHeader = ({ username, bio, picture, onlineStatus, onPress }) => {
-	// const navigation = useNavigation()
+const HeaderChatNhom = ({ roomChat,user}) => {
+	const navigation = useNavigation()
 	return (
 		<View style={styles.container}>
 			<TouchableOpacity style={styles.backButton} >
@@ -17,15 +17,15 @@ const ChatHeader = ({ username, bio, picture, onlineStatus, onPress }) => {
 				<TouchableOpacity style={styles.profile}>
 					<Image style={styles.hinh}  />
 					<View style={styles.usernameAndOnlineStatus}>
-						<Text style={styles.username}>Duc</Text>
-						<Text style={styles.onlineStatus}>Online</Text>
+						<Text style={styles.username}>{roomChat.roomName}</Text>
+						<Text style={styles.onlineStatus}>{roomChat.members.length} thành viên </Text>
 					</View>
 				</TouchableOpacity>
 				<View style={styles.options}>
 					<TouchableOpacity
 						style={{ paddingHorizontal: 5 }}
 					>
-						<Icon2
+						<Icon2 onPress={() => navigation.navigate("ThemThanhVien")}
 							name="addusergroup"
 							size={30}
 							color={theme.colors.white}
@@ -40,7 +40,7 @@ const ChatHeader = ({ username, bio, picture, onlineStatus, onPress }) => {
 							color={theme.colors.white}
 						/>
 					</TouchableOpacity>
-					<TouchableOpacity style={{ paddingHorizontal: 10 }}>
+					<TouchableOpacity onPress={()=>navigation.navigate("ProfileChatNhom",{roomChat,user})} style={{ paddingHorizontal: 10 }}>
 						<Icon2
 							name="bars"
 							size={30}
@@ -106,4 +106,4 @@ const styles = StyleSheet.create({
 	},
 });
 
-export default ChatHeader;
+export default HeaderChatNhom;

@@ -9,7 +9,8 @@ import FontAwesome from "react-native-vector-icons/FontAwesome";
 const Tab = createBottomTabNavigator();
 
 const BottomTabNavigator = ({navigation,route}) => {
-   const user = route.params.data.user
+  console.log(route.params);
+   const user = route.params.user
   
     return (
       //   <Tab.Navigator 

@@ -25,17 +25,16 @@ const LoginScreen = ({navigation}) => {
         }
         if(data.status ===true){
             console.log("Thanh cong");
-            navigation.navigate("BottomTabNavigator",{data});
+            navigation.navigate("BottomTabNavigator",{user:data.user});
         }
     }
-    // console.log(input)
     return (
         <View style={style.main}>
-            <ImageBackground source={require('../image/bg.png')} resizeMode="cover" style={style.image}>
+            <ImageBackground source={require('../../../assets/bg.png')} resizeMode="cover" style={style.image}>
             <View style={{ alignItems: 'center' }}>
                 <Image
                     style={{ width: 250, height: 250, }}
-                    source={require('../image/avata.png')}
+                    source={require('../../../assets/avata.png')}
                 />
             </View>
             <Text style={style.title} >Login User</Text>

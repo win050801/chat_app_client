@@ -8,6 +8,9 @@ import OtpScreen from "../Screens/OtpScreen";
 import BottomTabNavigator from "./BottomTabNavigator";
 import TaoNhom from "../Screens/TaoNhom";
 import ChatNhom from "../Screens/ChatNhom";
+import ProfileChatNhom from "../Screens/ProfileChatNhom";
+import XemThanhVien from "../Screens/XemThanhVien";
+import ThemThanhVien from "../Screens/ThemThanhVien";
 
 
 const Stack = createStackNavigator();
@@ -42,7 +45,19 @@ const StackNavigator = () => {
 
       <Stack.Screen
         options={{ headerMode: 'none' }}
+        name="XemThanhVien" component={XemThanhVien} />
+
+<Stack.Screen
+        options={{ headerMode: 'none' }}
+        name="ThemThanhVien" component={ThemThanhVien} />
+
+<Stack.Screen
+        options={{ headerMode: 'none' }}
         name="ChatNhom" component={ChatNhom} />
+
+<Stack.Screen
+        options={{ headerMode: 'none' }}
+        name="ProfileChatNhom" component={ProfileChatNhom} />
 
     </Stack.Navigator>
   )

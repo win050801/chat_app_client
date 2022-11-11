@@ -5,12 +5,11 @@ import Recent from "./Recent";
 
 const HomeScreen = (props) => {
     const user = props.user
-    console.log(user);
     return (
             <FlatList
                 data={[]}
                 ListHeaderComponent={()=><ActiveUser user = {user}/>}
-                ListFooterComponent={()=><Recent user = {user} />}
+                ListFooterComponent={()=><Recent user = {user}  />}
             />
     )
 }

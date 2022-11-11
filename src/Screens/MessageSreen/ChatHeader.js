@@ -4,7 +4,7 @@ import { useNavigation } from "@react-navigation/native";
 import Icon from "@expo/vector-icons/FontAwesome";
 import Icon2 from "@expo/vector-icons/AntDesign";
 
-import { theme } from "../../theme";
+import { theme } from "../../Mau/theme";
 
 const ChatHeader = () => {
 	// const navigation = useNavigation()

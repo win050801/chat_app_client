@@ -3,7 +3,7 @@ import { ScrollView } from "react-native";
 import { Api } from "../../Global/Axios/Api";
 import Message from "./Message";
 
-import { theme } from "../../theme";
+import { theme } from "../../Mau/theme";
 
 const MessagesList = ({route}) => {
 

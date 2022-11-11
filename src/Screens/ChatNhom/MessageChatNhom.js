@@ -1,7 +1,7 @@
 import React, { useState, useRef } from "react";
 import { View, Text, StyleSheet, Alert } from "react-native";
 
-import { theme } from "../../theme";
+import { theme } from "../../Mau/theme";
 
 const MessageChatNhom = ({ time, isLeft, message }) => {
 

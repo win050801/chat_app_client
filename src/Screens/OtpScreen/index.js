@@ -30,7 +30,7 @@ const OtpScreen = ({navigation})  => {
     }
     return (
         <View style={style.main}>
-            <ImageBackground source={require('../image/bg.png')} resizeMode="cover" style={style.image}>
+            <ImageBackground source={require('../../../assets/bg.png')} resizeMode="cover" style={style.image}>
             <Text style={style.title} >OTP</Text>
             <View style={{ marginTop: 10 }}></View>
             <Input

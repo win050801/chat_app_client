@@ -11,7 +11,7 @@ import {
 import { Api } from "../../Global/Axios/Api";
 
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
-import { theme } from "../../theme";
+import { theme } from "../../Mau/theme";
 
 const ChatInput = ({route}) => {
     const from = route.params.user._id
