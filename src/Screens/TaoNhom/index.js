@@ -22,7 +22,13 @@ const TaoNhom = ({props,route}) => {
             members:dsTam,
             roomName:roomName
             });
-    navigation.navigate("ChatNhom",{item:data.data,user:route.params.user})
+            const roomTam = {
+                id:data.data._id,
+                manager:data.data.manager,
+                members:data.data.members
+            }
+            console.log(data);
+    navigation.navigate("ChatNhom",{item:roomTam,user:route.params.user})
     }
     const RenderItem = ({ item,user }) => {
         const addMem = async(item) =>{

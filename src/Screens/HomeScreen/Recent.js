@@ -1,7 +1,6 @@
 import React ,{useState,useEffect} from "react";
-import { FlatList, StyleSheet, Text, View } from "react-native";
+import { FlatList, StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import { ListItem, Avatar, Button } from 'react-native-elements';
-import { TouchableOpacity } from "react-native-gesture-handler";
 import { useNavigation } from "@react-navigation/native";
 import { Api } from "../../Global/Axios/Api";
 

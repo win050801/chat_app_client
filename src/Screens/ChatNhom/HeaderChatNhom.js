@@ -25,7 +25,7 @@ const HeaderChatNhom = ({ roomChat,user}) => {
 					<TouchableOpacity
 						style={{ paddingHorizontal: 5 }}
 					>
-						<Icon2 onPress={() => navigation.navigate("ThemThanhVien")}
+						<Icon2 onPress={() => navigation.navigate("ThemThanhVien",{roomChat,user})}
 							name="addusergroup"
 							size={30}
 							color={theme.colors.white}
