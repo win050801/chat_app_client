@@ -7,7 +7,7 @@ import Icon2 from "@expo/vector-icons/AntDesign";
 import { theme } from "../../Mau/theme";
 
 const ChatHeader = () => {
-	// const navigation = useNavigation()
+	const navigation = useNavigation()
 	return (
 		<View style={styles.container}>
 			<TouchableOpacity style={styles.backButton} >
@@ -40,7 +40,7 @@ const ChatHeader = () => {
 							color={theme.colors.white}
 						/>
 					</TouchableOpacity>
-					<TouchableOpacity style={{ paddingHorizontal: 10 }}>
+					<TouchableOpacity style={{ paddingHorizontal: 10 }} onPress={() => navigation.navigate("TuyChonChatDon")}>
 						<Icon2
 							name="bars"
 							size={30}

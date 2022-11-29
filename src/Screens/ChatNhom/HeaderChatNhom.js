@@ -40,7 +40,7 @@ const HeaderChatNhom = ({ roomChat,user}) => {
 							color={theme.colors.white}
 						/>
 					</TouchableOpacity>
-					<TouchableOpacity onPress={()=>navigation.navigate("ProfileChatNhom",{roomChat,user})} style={{ paddingHorizontal: 10 }}>
+					<TouchableOpacity onPress={()=>navigation.navigate("TuyChonChatNhom",{roomChat,user})} style={{ paddingHorizontal: 10 }}>
 						<Icon2
 							name="bars"
 							size={30}

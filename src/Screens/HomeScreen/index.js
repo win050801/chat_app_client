@@ -2,15 +2,19 @@ import React from "react";
 import { StyleSheet, Text, View, FlatList,Image } from "react-native";
 import ActiveUser from "./ActiveUser";
 import Recent from "./Recent";
+import Footer from "./Footer";
+
 
 const HomeScreen = (props) => {
     const user = props.user
     return (
-            <FlatList
-                data={[]}
-                ListHeaderComponent={()=><ActiveUser user = {user}/>}
-                ListFooterComponent={()=><Recent user = {user}  />}
-            />
+        <View>
+            <ActiveUser user = {user}/>
+            <Recent user = {user}  />
+            <Footer></Footer>
+        </View>
+            
+
     )
 }
 

@@ -1,53 +1,37 @@
 import React, { useRef, useState, useEffect } from "react";
-import { StyleSheet, Text, View, TextInput, Alert, FlatList} from "react-native";
+import { StyleSheet, Text, View, TextInput, FlatList, Alert } from "react-native";
 import Ionicons from "react-native-vector-icons/AntDesign";
 import SearchBar from 'react-native-elements/dist/searchbar/SearchBar-android';
 import { ListItem, Avatar, Button } from 'react-native-elements';
+import { TouchableOpacity } from "react-native-gesture-handler";
 import { Checkbox } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
-import EvilIcons from 'react-native-vector-icons/EvilIcons';
 import { Api } from "../../Global/Axios/Api";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import EvilIcons from 'react-native-vector-icons/EvilIcons';
 const ThemThanhVien = ({ props, route }) => {
     const navigation = useNavigation();
-
-    // var user = props.user
-    // const id = user._id
-    // console.log(route.params);
-
-    // const data = route.params.data
     const [dsMem, setdsMem] = useState([])
     const [roomName, setRoomName] = useState()
     const [dsTV, setDS] = useState([])
-
-    // const [data, setData] = useState([
-
-    // ])
+    
 
 
     useEffect(() => {
         async function fetchData() {
-
-
-            const { data } = await Api.post(`http://192.168.43.98:5000/api/auth/allusers`, {
+            const { data } = await Api.post(`http://192.168.14.106:5000/api/auth/allusers`, {
                 id: route.params.user._id
             });
             const dsBan = []
             const dsTam = [...route.params.roomChat.members]
-
             data.forEach(element => {
                 if (dsTam.indexOf(element._id) < 0) {
                     dsBan.push(element)
                 }
             });
-
-            dsBan.splice(dsBan.indexOf(route.params.user._id), 1)
-            // console.log(route.params.roomChat);
-            // console.log(dsBan);
             setDS(dsBan)
         }
         fetchData();
-    });
+    },[]);
     const them = async () => {
         dsTam = [...dsMem]
         dsTam.push(route.params.user._id)
@@ -56,19 +40,12 @@ const ThemThanhVien = ({ props, route }) => {
             id: route.params.roomChat.id,
             mems: members
         })
-        navigation.navigate("ChatNhom", { data: data.data })
+        console.log(data.data);
+        // navigation.navigate("ChatNhom", { data: data.data })
     }
-    const RenderItem = ({ item, user }) => {
-        const addMem = async (item) => {
-            dsTam = [...dsMem]
-            dsTam.push(item._id)
-            setdsMem(dsTam)
-        }
 
-
-
-        const [checked, setChecked] = React.useState(false);
-        return (
+    const Item1 = ({ item, click, onPress, backgroundColor, textColor, index }) => (
+        <View>
             <TouchableOpacity onPress={() => addMem(item)}>
                 <ListItem>
                     <Checkbox style={{ borderRadius: 15 }}
@@ -86,33 +63,51 @@ const ThemThanhVien = ({ props, route }) => {
                     </ListItem.Content>
                 </ListItem>
             </TouchableOpacity>
+        </View>
+    );
+
+    const addMem = async (item) => {
+        dsTam = [...dsMem]
+        dsTam.push(item._id)
+        setdsMem(dsTam)
+    }
+
+    const [checked, setChecked] = React.useState(false);
+    const RenderItem = ({ item, index }) => {
+        return (
+            <Item1
+                item={item}
+                index={index}
+            />
         );
     }
-    
+
     return (
         <View style={style.main}>
-            <View style={{ flexDirection: 'row', alignItems: 'center', marginLeft: 10 }}>
-                <View>
-                    <TouchableOpacity>
-                        <Ionicons title="Hủy tạo nhóm" size={25} name="close" />
-                    </TouchableOpacity>
-                </View>
-                <View>
-                    <Text style={{ fontSize: 18, fontWeight: 'bold' }}>
-                        Thêm vào nhóm
-                    </Text>
-                    <Text>
-                        Đã chọn: 0
-                    </Text>
+            <View style={{backgroundColor:'white'}}>
+                <View style={{ flexDirection: 'row', alignItems: 'center', marginLeft: 10,marginTop:25 }}>
+                    <View>
+                        <TouchableOpacity>
+                            <Ionicons title="Hủy tạo nhóm" size={25} name="close" />
+                        </TouchableOpacity>
+                    </View>
+                    <View style={{marginLeft:15}}>
+                        <Text style={{ fontSize: 18, fontWeight: 'bold' }}>
+                            Thêm vào nhóm
+                        </Text>
+                        <Text>
+                            Đã chọn: 0
+                        </Text>
+                    </View>
                 </View>
             </View>
             <View style={{ backgroundColor: '#c0c0c0', flex: 0.002 }}></View>
-            <View>
+            <View style={{marginTop:5}}>
                 <SearchBar
                     placeholder="Tìm kiếm số điện thoại"
                     inputContainerStyle={{ backgroundColor: 'white', elevation: 5, borderRadius: 15, width: 370, marginLeft: 10, height: 45 }} />
             </View>
-            <View>
+            <View style={{marginTop:15}}>
                 <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', marginLeft: 10 }}>
                     <TouchableOpacity style={{ backgroundColor: '#d3d3d3', width: 50, alignItems: 'center', height: 50, borderRadius: 50 }}>
                         <EvilIcons style={{ marginTop: 10 }} name="link" size={30} color='blue' />
@@ -123,17 +118,13 @@ const ThemThanhVien = ({ props, route }) => {
             </View>
 
             <View style={{ backgroundColor: '#c0c0c0', flex: 0.002 }}></View>
-
-            <View style={{ flex: 1 }}>
-                <FlatList
-                    ListHeaderComponent={() => <View></View>}
-                    data={dsTV}
-                    renderItem={({ item }) => <RenderItem item={item} />}
-                />
-            </View>
+            <FlatList
+                data={dsTV}
+                renderItem={RenderItem}
+            />
             <View style={{ backgroundColor: '#c0c0c0', flex: 0.002 }}></View>
-            <View style={{ alignItems: 'center', justifyContent: "center", flex: 0.1 }}>
-                <TouchableOpacity style={{ backgroundColor: 'yellow', borderRadius: 15, height: 40, width: 200 }}>
+            <View style={{ alignItems: 'center', justifyContent: "center", flex: 0.12,marginTop:5 }}>
+                <TouchableOpacity onPress={them} style={{ backgroundColor: 'white', borderRadius: 15, height: 40, width: 200,borderColor:'#c0c0c0',borderWidth: 1 }}>
                     <Text style={{ marginTop: 10, marginLeft: 50 }}>Thêm vào nhóm</Text>
                 </TouchableOpacity>
             </View>
@@ -143,14 +134,11 @@ const ThemThanhVien = ({ props, route }) => {
 
 };
 
-
-
 export default ThemThanhVien;
 
 const style = StyleSheet.create({
     main: {
         flex: 1,
-        marginTop: 25,
         backgroundColor: 'white'
     },
 });

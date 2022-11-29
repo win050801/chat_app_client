@@ -11,7 +11,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Avatar, Input } from 'react-native-elements';
 import { theme } from "../../Mau/theme";
 import { Api } from "../../Global/Axios/Api";
-const ProfileChatNhom = ({route}) => {
+const TuyChonChatNhom = ({route}) => {
 	const navigation = useNavigation()
 	const roiNhom =async ()=>{
 		const members = [...route.params.roomChat.members]
@@ -207,4 +207,4 @@ const styles = StyleSheet.create({
 	}
 });
 
-export default ProfileChatNhom;
+export default TuyChonChatNhom;
