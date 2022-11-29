@@ -9,57 +9,66 @@ import {
 } from "react-native";
 
 import { Api } from "../../Global/Axios/Api";
-
+import { loginRoute, sendMessageRoute } from "../../util/API"
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import { theme } from "../../Mau/theme";
 
-const ChatInput = ({route}) => {
-    const from = route.params.user._id
-    const to = route.params.to
-    const [mess, setmess] = useState([]);
-    const [messages, setMessages] = useState('')
-
-    const send = async()=>{
-          const { data } = await Api.post(`http://192.168.14.106:5000/api/messages/addmsg`, { 
-              from,
-              to,
-              message:mess
-              });
-          const msgs = [...messages];
-          msgs.push({ fromSelf: true, message:mess,reaction:""});
-          setMessages(msgs);
-        }
+const ChatInput = ({ route ,messages,setMessages}) => {
+	const from = route.params.user._id
+	const to = route.params.to
+	const socket = route.params.socket
+	const [mess, setmess] = useState("");
+	
+	const send = async () => {
+		const { data } = await Api.post(sendMessageRoute, {
+			from,
+			to,
+			message: mess,
+			avatarImage:route.params.user.avatarImage
+		});
+		socket.current.emit("send-msg", {
+			to: to,
+			from: from,
+			msg: mess,
+			avatarImage:route.params.user.avatarImage
+		});
+		const msgs = [...messages];
+		msgs.push({ fromSelf: true, message: mess, reaction: "" });
+		setMessages(msgs);
+		setmess("")
+	}
 
 	return (
 		<View style={styles.container}>
-            <View style={styles.innerContainer}>
-                <View style={styles.inputAndMicrophone}>
-                    <TouchableOpacity style={styles.emoticonButton}>
-                        <Icon name="emoticon-outline" size={23} color={theme.colors.description}/>
-                    </TouchableOpacity>
-                    <TextInput 
-                        multiline
-                        placeholder="Type something..." 
-                        style={styles.input}
-                        onChangeText={newText => setmess(newText)}
-                    />
-                    <TouchableOpacity>
-                        <Icon name="paperclip" size={23} color={theme.colors.description}/>
-                    </TouchableOpacity>
-                    <TouchableOpacity>
-                        <Icon name="camera" size={23} color={theme.colors.description}/>
-                    </TouchableOpacity>
-                    <TouchableOpacity>
-                        <Icon name="image" size={23} color={theme.colors.description}/>
-                    </TouchableOpacity>
-                </View>
-                <View>
-                <TouchableOpacity style={styles.sendButton} onPress={send}>
-                        <Icon name={mess ? "send" : "microphone" } size={23} color={theme.colors.white}/>
-                </TouchableOpacity>
-                </View>
-            </View>
-        </View>
+			<View style={styles.innerContainer}>
+				<View style={styles.inputAndMicrophone}>
+					<TouchableOpacity style={styles.emoticonButton}>
+						<Icon name="emoticon-outline" size={23} color={theme.colors.description} />
+					</TouchableOpacity>
+					<TextInput
+						multiline
+						value={mess}
+						placeholder="Type something..."
+						style={styles.input}
+						onChangeText={newText => setmess(newText)}
+					/>
+					<TouchableOpacity>
+						<Icon name="paperclip" size={23} color={theme.colors.description} />
+					</TouchableOpacity>
+					<TouchableOpacity>
+						<Icon name="camera" size={23} color={theme.colors.description} />
+					</TouchableOpacity>
+					<TouchableOpacity>
+						<Icon name="image" size={23} color={theme.colors.description} />
+					</TouchableOpacity>
+				</View>
+				<View>
+					<TouchableOpacity style={styles.sendButton} onPress={send}>
+						<Icon name={mess ? "send" : "microphone"} size={23} color={theme.colors.white} />
+					</TouchableOpacity>
+				</View>
+			</View>
+		</View>
 	);
 };
 

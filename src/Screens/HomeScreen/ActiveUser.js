@@ -7,7 +7,7 @@ import Ionicons from "react-native-vector-icons/AntDesign"
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Button, Menu, Divider, Provider } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
-
+import { allUsersRoute, getRoom } from "../../util/API"
 const ActiveUser = (props) => {
     const navigation = useNavigation();
     var user = props.user
@@ -16,14 +16,14 @@ const ActiveUser = (props) => {
     const [data, setdata] = useState([])
     useEffect(() => {
         async function fetchData() {
-            const { data } = await Api.post(`http://192.168.14.106:5000/api/auth/allusers`, {
+            const { data } = await Api.post(allUsersRoute, {
                 id: id
             });
             setdata(data)
             // console.log(setdata(data));
         }
         fetchData();
-    });
+    },[]);
 
     const [visible, setVisible] = React.useState(false);
     const openMenu = () => setVisible(true);
@@ -32,10 +32,11 @@ const ActiveUser = (props) => {
     return (
         <View style={{ backgroundColor: '#00bfff' }}>
             <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", marginTop: 20 }}>
-                <View>
+                <View style={{width:"85%"}}>
                     <SearchBar
                         placeholder="Search People"
-                        inputContainerStyle={{ backgroundColor: 'white', elevation: 5, borderRadius: 15, width: 330, marginLeft: 10 }} />
+                        inputContainerStyle={{ backgroundColor: 'white', elevation: 5, borderRadius: 15, width: "100%", marginLeft: 10 }}
+                    />
                 </View>
                 <Provider>
                     <View
@@ -51,7 +52,7 @@ const ActiveUser = (props) => {
                                 Thêm bạn
                             </Button> */}
                             {/* <Divider /> */}
-                            <TouchableOpacity onPress={()=>navigation.navigate("TaoNhom",{data,user})}>
+                            <TouchableOpacity onPress={() => navigation.navigate("TaoNhom", { data, user })}>
                                 <Button icon={{ uri: 'https://cdn-icons-png.flaticon.com/512/694/694642.png' }}>
                                     Tạo nhóm
                                 </Button>
@@ -75,7 +76,7 @@ const RenderItem = ({ item, user }) => {
             <Avatar
                 size="medium"
                 rounded
-                source={{ uri: 'https://media.gettyimages.com/photos/handsome-young-adult-businessman-with-stubble-picture-id1250238624?k=20&m=1250238624&s=612x612&w=0&h=35Sf2RXBiMDoaabub7XpBV--FM_wuEf8R1lbgO_GquM=' }} />
+                source={{ uri: `${item.avatarImage}` }} />
         </View>
     );
 }

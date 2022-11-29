@@ -6,8 +6,10 @@ import Icon2 from "@expo/vector-icons/AntDesign";
 
 import { theme } from "../../Mau/theme";
 
-const ChatHeader = () => {
+const ChatHeader = ({route}) => {
+	
 	// const navigation = useNavigation()
+	const image = 'https://media.gettyimages.com/photos/handsome-young-adult-businessman-with-stubble-picture-id1250238624?k=20&m=1250238624&s=612x612&w=0&h=35Sf2RXBiMDoaabub7XpBV--FM_wuEf8R1lbgO_GquM='
 	return (
 		<View style={styles.container}>
 			<TouchableOpacity style={styles.backButton} >
@@ -15,9 +17,9 @@ const ChatHeader = () => {
 			</TouchableOpacity>
 			<View style={styles.profileOptions}>
 				<TouchableOpacity style={styles.profile}>
-					<Image style={styles.hinh}  />
+					<Image style={styles.hinh} source={{ uri: `${route.params.currenChat.avatarImage}` }}  />
 					<View style={styles.usernameAndOnlineStatus}>
-						<Text style={styles.username}>Duc</Text>
+						<Text style={styles.username}>{route.params.currenChat.username}</Text>
 						<Text style={styles.onlineStatus}>Online</Text>
 					</View>
 				</TouchableOpacity>

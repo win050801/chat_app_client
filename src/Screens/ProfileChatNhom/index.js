@@ -11,13 +11,14 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Avatar, Input } from 'react-native-elements';
 import { theme } from "../../Mau/theme";
 import { Api } from "../../Global/Axios/Api";
+import {addTT} from "../../util/API"
 const ProfileChatNhom = ({route}) => {
 	const navigation = useNavigation()
 	const roiNhom =async ()=>{
 		const members = [...route.params.roomChat.members]
 		members.splice(members.indexOf(route.params.user._id),1)
 		console.log("test");
-		const respon = await Api.post(`http://192.168.14.106:5000/api/room/addTT`, { 
+		const respon = await Api.post(addTT, { 
             id:route.params.roomChat.id,
 			mems:members
         });

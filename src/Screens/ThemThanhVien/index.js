@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from "react";
-import { StyleSheet, Text, View, TextInput, Alert, FlatList} from "react-native";
+import { StyleSheet, Text, View, TextInput, Alert, FlatList } from "react-native";
 import Ionicons from "react-native-vector-icons/AntDesign";
 import SearchBar from 'react-native-elements/dist/searchbar/SearchBar-android';
 import { ListItem, Avatar, Button } from 'react-native-elements';
@@ -8,6 +8,7 @@ import { useNavigation } from '@react-navigation/native';
 import EvilIcons from 'react-native-vector-icons/EvilIcons';
 import { Api } from "../../Global/Axios/Api";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { allUsersRoute } from "../../util/API"
 const ThemThanhVien = ({ props, route }) => {
     const navigation = useNavigation();
 
@@ -29,7 +30,7 @@ const ThemThanhVien = ({ props, route }) => {
         async function fetchData() {
 
 
-            const { data } = await Api.post(`http://192.168.43.98:5000/api/auth/allusers`, {
+            const { data } = await Api.post(allUsersRoute, {
                 id: route.params.user._id
             });
             const dsBan = []
@@ -41,13 +42,13 @@ const ThemThanhVien = ({ props, route }) => {
                 }
             });
 
-            dsBan.splice(dsBan.indexOf(route.params.user._id), 1)
+            // dsBan.splice(dsBan.indexOf(route.params.user._id), 1)
             // console.log(route.params.roomChat);
             // console.log(dsBan);
             setDS(dsBan)
         }
         fetchData();
-    });
+    },[]);
     const them = async () => {
         dsTam = [...dsMem]
         dsTam.push(route.params.user._id)
@@ -59,24 +60,22 @@ const ThemThanhVien = ({ props, route }) => {
         navigation.navigate("ChatNhom", { data: data.data })
     }
     const RenderItem = ({ item, user }) => {
-        const addMem = async (item) => {
-            dsTam = [...dsMem]
-            dsTam.push(item._id)
-            setdsMem(dsTam)
-        }
+        // const addMem = async (item) => {
+        //     dsTam = [...dsMem]
+        //     dsTam.push(item._id)
+        //     setdsMem(dsTam)
+        // }
 
-
-
-        const [checked, setChecked] = React.useState(false);
+        // const [checked, setChecked] = React.useState(false);
         return (
-            <TouchableOpacity onPress={() => addMem(item)}>
+            <TouchableOpacity >
                 <ListItem>
-                    <Checkbox style={{ borderRadius: 15 }}
+                    {/* <Checkbox style={{ borderRadius: 15 }}
                         status={checked ? 'checked' : 'unchecked'}
                         onPress={() => {
                             setChecked(!checked);
                         }}
-                    />
+                    /> */}
                     <Avatar
                         size="medium"
                         rounded
@@ -88,7 +87,38 @@ const ThemThanhVien = ({ props, route }) => {
             </TouchableOpacity>
         );
     }
-    
+    const Item = ({ item, click, onPress, backgroundColor, textColor, index }) => (
+        <TouchableOpacity >
+                <ListItem>
+                    {/* <Checkbox style={{ borderRadius: 15 }}
+                        status={checked ? 'checked' : 'unchecked'}
+                        onPress={() => {
+                            setChecked(!checked);
+                        }}
+                    /> */}
+                    <Avatar
+                        size="medium"
+                        rounded
+                        source={{ uri: 'https://media.gettyimages.com/photos/handsome-young-adult-businessman-with-stubble-picture-id1250238624?k=20&m=1250238624&s=612x612&w=0&h=35Sf2RXBiMDoaabub7XpBV--FM_wuEf8R1lbgO_GquM=' }} />
+                    <ListItem.Content>
+                        <ListItem.Title>{item.username}</ListItem.Title>
+                    </ListItem.Content>
+                </ListItem>
+            </TouchableOpacity>
+    );
+    const renderItem = ({ item, index }) => {
+        return (
+            <Item
+                item={item}
+                index={index}
+               
+            // onPress={() => {
+            //        setcick(DATA.indexOf(item))
+            //     }
+            // }  
+            />
+        );
+    };
     return (
         <View style={style.main}>
             <View style={{ flexDirection: 'row', alignItems: 'center', marginLeft: 10 }}>
@@ -126,9 +156,10 @@ const ThemThanhVien = ({ props, route }) => {
 
             <View style={{ flex: 1 }}>
                 <FlatList
-                    ListHeaderComponent={() => <View></View>}
                     data={dsTV}
-                    renderItem={({ item }) => <RenderItem item={item} />}
+                    renderItem={renderItem}
+                    // horizontal
+                 
                 />
             </View>
             <View style={{ backgroundColor: '#c0c0c0', flex: 0.002 }}></View>

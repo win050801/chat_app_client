@@ -15,7 +15,7 @@ const HeaderChatNhom = ({ roomChat,user}) => {
 			</TouchableOpacity>
 			<View style={styles.profileOptions}>
 				<TouchableOpacity style={styles.profile}>
-					<Image style={styles.hinh}  />
+				<Image style={styles.hinh} source={{ uri: `${roomChat.avatarImage}` }}  />
 					<View style={styles.usernameAndOnlineStatus}>
 						<Text style={styles.username}>{roomChat.roomName}</Text>
 						<Text style={styles.onlineStatus}>{roomChat.members.length} thành viên </Text>

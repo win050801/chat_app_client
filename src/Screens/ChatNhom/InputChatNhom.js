@@ -7,24 +7,31 @@ import {
 	Platform,
 	TouchableOpacity,
 } from "react-native";
-
+import {sendMessageRoute} from "../../util/API"
 import { Api } from "../../Global/Axios/Api";
 
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import { theme } from "../../Mau/theme";
 
-const InputChatNhom = ({roomChat,user,setMessages,messages}) => {
-    const [message, setMessage] = useState('');
+const InputChatNhom = ({roomChat,user,setMessages,messages,socket}) => {
+    const [message, setMessage] = useState("");
 
 	const sendMessage = async ()=>{
-		const respon = await Api.post(`http://192.168.14.106:5000/api/messages/addmsg`, { 
+		const respon = await Api.post(sendMessageRoute, { 
             from:user._id,
 			to:roomChat.id,
 			message:message,
 			namesend:user.username,
 			avatarImage:user.avatarImage
         });
-		console.log(messages);
+		console.log(socket.current);
+		socket.current.emit("send-msg", {
+			to: roomChat.members,
+			from: user._id,
+			msg: message,
+			namesend:user.username,
+			avatarImage:user.avatarImage
+		});
 		const mess ={
 			fromSelf:true,
 			message:message
@@ -33,6 +40,7 @@ const InputChatNhom = ({roomChat,user,setMessages,messages}) => {
 		const messTam = [...messages]
 		messTam.push(mess)
 		setMessages(messTam)
+		setMessage("")
 
 	}
 	return (
@@ -46,6 +54,7 @@ const InputChatNhom = ({roomChat,user,setMessages,messages}) => {
                         multiline
                         placeholder="Type something..." 
                         style={styles.input}
+						value={message}
 						onChangeText={text => setMessage(text)}
                     />
                     <TouchableOpacity>

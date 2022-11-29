@@ -9,7 +9,7 @@ import FontAwesome from "react-native-vector-icons/FontAwesome";
 const Tab = createBottomTabNavigator();
 
 const BottomTabNavigator = ({navigation,route}) => {
-  console.log(route.params);
+ 
    const user = route.params.user
   
     return (

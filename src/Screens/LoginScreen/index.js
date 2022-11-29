@@ -5,21 +5,24 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { useState } from "react";
 import { Api } from "../../Global/Axios/Api";
+import {loginRoute} from "../../util/API"
 const LoginScreen = ({navigation}) => {
     global.foo = "test"
     const [input, setInput] = useState({
-        phonenumber: "",
-        password: "",
+        phonenumber: "0385553842",
+        password: "123456789",
       
     });
     const handleLogin = async (event)=>{
         //validate()
-     
+       
         const {phonenumber,password} = input;
-        const { data } = await Api.post(`http://192.168.14.106:5000/api/auth/login`, { 
+  
+        const { data } = await Api.post(loginRoute, { 
             phonenumber,
             password,
         });
+     
         if(data.status ===false){
             console.log(data.msg)
         }

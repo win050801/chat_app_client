@@ -8,13 +8,46 @@ import MessengerListChatNhom from "../ChatNhom/MessengerListChatNhom";
 
 export function ChatNhom({navigation,route,props,data}) {
   const [messages, setMessages] = useState([]);
-  console.log(route);
+  const [arrivalMessage, setArrivalMessage] = useState("");
+  useEffect(() => {
+    async function fetchData() {
+      if (route.params.socket.current) {
+        await route.params.socket.current.on("msg-recieve", ({
+          id,
+          msg,
+          namesend,
+          avatarImage,
+          files,
+          image,
+          deleteFromSelf,
+          deletedToAll, }) => {
+          
+          setArrivalMessage({
+            fromSelf: false,
+            message: msg,
+            image: "",
+            files: "",
+            id: id,
+            avatarImage: avatarImage,
+            namesend: namesend
+        });
+        });
+
+      }
+    }
+    fetchData();
+  }, []);
+  useEffect(() => {
+    const msgs = [...messages];
+          msgs.push(arrivalMessage);
+          setMessages(msgs);
+  }, [arrivalMessage]);
   
   return(
     <View style={{flex:1}}>
       <HeaderChatNhom roomChat={route.params.item}  user ={route.params.user}/>
       <MessengerListChatNhom roomChat={route.params.item} user ={route.params.user} messages={messages} setMessages={setMessages} />
-      <InputChatNhom setMessages={setMessages}  messages={messages} roomChat={route.params.item} user ={route.params.user}/>
+      <InputChatNhom setMessages={setMessages}  messages={messages} socket={route.params.socket} roomChat={route.params.item} user ={route.params.user}/>
     </View>
   )
 }
