@@ -20,12 +20,14 @@ const ChatInput = ({ route ,messages,setMessages}) => {
 	const [mess, setmess] = useState("");
 	
 	const send = async () => {
+		console.log("send");
 		const { data } = await Api.post(sendMessageRoute, {
 			from,
 			to,
 			message: mess,
 			avatarImage:route.params.user.avatarImage
 		});
+		
 		socket.current.emit("send-msg", {
 			to: to,
 			from: from,

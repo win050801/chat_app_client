@@ -24,7 +24,7 @@ const InputChatNhom = ({roomChat,user,setMessages,messages,socket}) => {
 			namesend:user.username,
 			avatarImage:user.avatarImage
         });
-		console.log(socket.current);
+		
 		socket.current.emit("send-msg", {
 			to: roomChat.members,
 			from: user._id,

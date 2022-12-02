@@ -1,17 +1,18 @@
-import React from "react";
-import { StyleSheet, Text, View, FlatList, Image, ScrollView } from "react-native";
+import React, { useState } from "react";
+import { StyleSheet, Text, View, FlatList, Image, ScrollView,SafeAreaView } from "react-native";
 import HeaderDanhBa from "./HeaderDanhBa";
-// import BanBeDanhBa from "./BanBeDanhBa";
+import BanBeDanhBa from "./BanBeDanhBa";
 import NhomDanhBa from "./NhomDanhBa";
+import Header from "./Header"
 
-
-const DanhBa = () => {
+const DanhBa = ({user}) => {
+    const [banBe, setBanbe] = useState(true)
+    const [nhom, setNhom] = useState(false)
     return (
         <View>
-            <HeaderDanhBa></HeaderDanhBa>
+            <Header setBanbe={setBanbe} banBe={banBe} ></Header>
             <ScrollView>
-                {/* <BanBeDanhBa></BanBeDanhBa> */}
-                <NhomDanhBa></NhomDanhBa>
+                {banBe === true ? (<BanBeDanhBa user={user}></BanBeDanhBa>) : (<NhomDanhBa user={user}></NhomDanhBa>)}
             </ScrollView>
         </View>
 

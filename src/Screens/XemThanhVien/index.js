@@ -10,9 +10,11 @@ import EvilIcons from 'react-native-vector-icons/EvilIcons';
 import Icon2 from "@expo/vector-icons/AntDesign";
 import { theme } from "../../Mau/theme";
 import { Api } from "../../Global/Axios/Api";
-const XemThanhVien = ({ props }) => {
+import { allUsersRoute, getRoom, host } from "../../util/API"
+const XemThanhVien = ({ route }) => {
     const navigation = useNavigation();
-
+ 
+    const [data,setdata] =useState([])
     // var user = props.user
     // const id = user._id
     // console.log(route.params);
@@ -23,19 +25,28 @@ const XemThanhVien = ({ props }) => {
 
 
 
-    // useEffect(() => {
-    //     async function fetchData() {
+    useEffect(() => {
+        async function fetchData() {
 
 
-    // const { data } = await Api.post(`http://192.168.14.106:5000/api/auth/allusers`, { 
-    // id:id
-    // });
-    //         setdata(data)
+            const { data } = await Api.post(allUsersRoute, {
+            });
+            
+            const dataTam = []
+            route.params.roomChat.members.forEach(element => {
+                data.forEach(e => {
+                    if(e._id===element)
+                    {
+                        dataTam.push(e)
+                    }
+                });
+            });
+            setdata(dataTam)
 
 
-    //     }
-    //     fetchData();
-    //   });
+        }
+        fetchData();
+    },[]);
     // const them =async ()=>{
     //     dsTam = [...dsMem]
     //     dsTam.push(route.params.user._id)
@@ -60,19 +71,15 @@ const XemThanhVien = ({ props }) => {
         return (
             <TouchableOpacity onPress={() => addMem(item)}>
                 <ListItem>
-                    <Checkbox style={{ borderRadius: 15 }}
-                        status={checked ? 'checked' : 'unchecked'}
-                        onPress={() => {
-                            setChecked(!checked);
-                        }}
-                    />
+                    
                     <Avatar
                         size="medium"
                         rounded
-                        source={{ uri: 'https://media.gettyimages.com/photos/handsome-young-adult-businessman-with-stubble-picture-id1250238624?k=20&m=1250238624&s=612x612&w=0&h=35Sf2RXBiMDoaabub7XpBV--FM_wuEf8R1lbgO_GquM=' }} />
+                        source={{ uri: `${item.avatarImage}` }} />
                     <ListItem.Content>
-                        <ListItem.Title>{item.username}</ListItem.Title>
-                        <ListItem.Title>Text</ListItem.Title>
+                        {item._id=== route.params.roomChat.manager ? (<><ListItem.Title>{item.username}     (Nhóm trưởng)</ListItem.Title></>):(<><ListItem.Title>{item.username}</ListItem.Title></>)}
+                        
+
                     </ListItem.Content>
                 </ListItem>
             </TouchableOpacity>
@@ -110,27 +117,27 @@ const XemThanhVien = ({ props }) => {
             </View>
             <View style={{ backgroundColor: '#c0c0c0', flex: 0.002 }}></View>
 
-            <View style={{ flex: 0.06, flexDirection: 'row',marginLeft:15,alignItems:'center' }}>
+            <View style={{ flex: 0.06, flexDirection: 'row', marginLeft: 15, alignItems: 'center' }}>
                 <TouchableOpacity>
                     <Text>TẤT CẢ</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={{marginLeft:20}}>
+                <TouchableOpacity style={{ marginLeft: 20 }}>
                     <Text>ĐÃ MỜI</Text>
                 </TouchableOpacity>
             </View>
 
             <View style={{ backgroundColor: '#c0c0c0', flex: 0.002 }}></View>
-            
-            <View style={{marginLeft:15,marginTop:10}}>
-            <Text>Thành viên (1)</Text>
+
+            <View style={{ marginLeft: 15, marginTop: 10 }}>
+                <Text>Thành viên ({route.params.roomChat.members.length})</Text>
             </View>
-            
+
             <View style={{ flex: 1 }}>
                 <FlatList
 
-                // ListHeaderComponent={() => <View></View>}
-                // data={data}
-                // renderItem={({ item }) => <RenderItem item={item}/>}
+                ListHeaderComponent={() => <View></View>}
+                data={data}
+                renderItem={({ item }) => <RenderItem item={item}/>}
                 />
             </View>
         </View>

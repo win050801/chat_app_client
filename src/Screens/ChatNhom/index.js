@@ -6,7 +6,7 @@ import HeaderChatNhom from "../ChatNhom/HeaderChatNhom";
 import InputChatNhom from "../ChatNhom/InputChatNhom";
 import MessengerListChatNhom from "../ChatNhom/MessengerListChatNhom";
 
-export function ChatNhom({navigation,route,props,data}) {
+export function ChatNhom({route,props,data}) {
   const [messages, setMessages] = useState([]);
   const [arrivalMessage, setArrivalMessage] = useState("");
   useEffect(() => {
@@ -25,7 +25,7 @@ export function ChatNhom({navigation,route,props,data}) {
           setArrivalMessage({
             fromSelf: false,
             message: msg,
-            image: "",
+            image: image,
             files: "",
             id: id,
             avatarImage: avatarImage,
@@ -45,7 +45,7 @@ export function ChatNhom({navigation,route,props,data}) {
   
   return(
     <View style={{flex:1}}>
-      <HeaderChatNhom roomChat={route.params.item}  user ={route.params.user}/>
+      <HeaderChatNhom roomChat={route.params.item} route={route}  user ={route.params.user}/>
       <MessengerListChatNhom roomChat={route.params.item} user ={route.params.user} messages={messages} setMessages={setMessages} />
       <InputChatNhom setMessages={setMessages}  messages={messages} socket={route.params.socket} roomChat={route.params.item} user ={route.params.user}/>
     </View>

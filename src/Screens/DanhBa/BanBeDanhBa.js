@@ -1,5 +1,5 @@
 import React, { useEffect, useState, Component, cloneElement } from "react";
-import { StyleSheet, Text, View, FlatList, ScrollView } from "react-native";
+import { StyleSheet, Text, View, FlatList, ScrollView, VirtualizedList } from "react-native";
 import SearchBar from 'react-native-elements/dist/searchbar/SearchBar-android'
 import { Avatar, ListItem } from 'react-native-elements';
 import { Api } from "../../Global/Axios/Api";
@@ -7,12 +7,12 @@ import Feather from "react-native-vector-icons/Feather"
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5"
 import FontAwesome from "react-native-vector-icons/FontAwesome"
 import Ionicons from "react-native-vector-icons/Ionicons"
-
+import { getCurrentFriend } from "../../util/API"
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Button, Menu, Divider, Provider } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 
-const BanBeDanhBa = () => {
+const BanBeDanhBa = ({user}) => {
     const navigation = useNavigation()
     const [click1, setclick1] = useState()
     
@@ -33,29 +33,21 @@ const BanBeDanhBa = () => {
         {
             ten: "Thắng",
         },
-        {
-            ten: "Thắng",
-        },
-        {
-            ten: "Thắng",
-        },
-        {
-            ten: "Thắng",
-        },
-        {
-            ten: "Đức",
-        },
-        {
-            ten: "Đức",
-        },
-        {
-            ten: "Đức",
-        },
-        {
-            ten: "Đức",
-        },
+
     ];
-  
+    const [data,setdata] = useState([])
+    useEffect(() => {
+        async function fetchData() {
+            const response = await Api.post(getCurrentFriend, {
+                currentUserId: user._id
+            });
+            setdata(response.data.data2)
+        }
+
+        fetchData();
+    }
+        , [])
+
     const Item1 = ({ item, index, onPress }) => (
         <View>
             {click1 === index ? (<View><TouchableOpacity style={{ justifyContent: 'center', marginLeft: 5, alignItems: 'center', borderWidth: 1, borderRadius: 50, borderColor: 'gray', height: 40, width: 170, backgroundColor: 'gray' }} onPress={onPress}  >
@@ -90,9 +82,9 @@ const BanBeDanhBa = () => {
                     <Avatar
                         size="medium"
                         rounded
-                        source={{ uri: 'https://media.gettyimages.com/photos/handsome-young-adult-businessman-with-stubble-picture-id1250238624?k=20&m=1250238624&s=612x612&w=0&h=35Sf2RXBiMDoaabub7XpBV--FM_wuEf8R1lbgO_GquM=' }} />
+                        source={{ uri: `${item.avatarImage}`}} />
                     <ListItem.Content>
-                        <ListItem.Title>{item.ten}</ListItem.Title>
+                        <ListItem.Title>{item.username}</ListItem.Title>
                     </ListItem.Content>
                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                         <TouchableOpacity>
@@ -129,36 +121,42 @@ const BanBeDanhBa = () => {
     };
 
     return (
+        <View>
             <View>
-                <TouchableOpacity style={{ flexDirection: 'row', height: 50, alignItems: 'center', marginTop: 15, marginLeft: 15 }} onPress={() => navigation.navigate("LoiMoiKetBan")}>
-                    <TouchableOpacity style={{ width: 45, height: 45, backgroundColor: '#1e90ff', borderRadius: 15, alignItems: 'center', justifyContent: 'center' }}>
-                        <FontAwesome5 title="kết bạn" size={25} name="user-friends" color={"white"} />
-                    </TouchableOpacity>
-                    <Text style={{ fontSize: 18, marginLeft: 20 }}>Lời mời kết bạn</Text>
+
+            </View>
+            <TouchableOpacity style={{ flexDirection: 'row', height: 50, alignItems: 'center', marginTop: 15, marginLeft: 15 }} onPress={() => navigation.navigate("LoiMoiKetBan")}>
+                <TouchableOpacity style={{ width: 45, height: 45, backgroundColor: '#1e90ff', borderRadius: 15, alignItems: 'center', justifyContent: 'center' }}>
+                    <FontAwesome5 title="kết bạn" size={25} name="user-friends" color={"white"} />
                 </TouchableOpacity>
-                <TouchableOpacity style={{ flexDirection: 'row', height: 50, alignItems: 'center', marginTop: 30, marginLeft: 15 }}>
-                    <TouchableOpacity style={{ width: 45, height: 45, backgroundColor: '#1e90ff', borderRadius: 15, alignItems: 'center', justifyContent: 'center' }}>
-                        <FontAwesome title="danh bạ" size={25} name="address-book-o" color={"white"} />
-                    </TouchableOpacity>
-                    <View>
-                        <Text style={{ fontSize: 18, marginLeft: 20 }}>Danh bạ máy</Text>
-                        <Text style={{ fontSize: 17, marginLeft: 20, color: "gray" }}>Các liên hệ có cùng zalo</Text>
-                    </View>
+                <Text style={{ fontSize: 18, marginLeft: 20 }}>Lời mời kết bạn</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={{ flexDirection: 'row', height: 50, alignItems: 'center', marginTop: 30, marginLeft: 15 }}>
+                <TouchableOpacity style={{ width: 45, height: 45, backgroundColor: '#1e90ff', borderRadius: 15, alignItems: 'center', justifyContent: 'center' }}>
+                    <FontAwesome title="danh bạ" size={25} name="address-book-o" color={"white"} />
                 </TouchableOpacity>
-                <View style={{ backgroundColor: '#d3d3d3', height: 10, marginTop: 10 }}></View>
-                <View style={{ alignItems: 'center', marginTop: 20 }}>
-                    <FlatList
-                        data={DATA1}
-                        renderItem={renderItem1}
-                        horizontal
-                    />
+                <View>
+                    <Text style={{ fontSize: 18, marginLeft: 20 }}>Danh bạ máy</Text>
+                    <Text style={{ fontSize: 17, marginLeft: 20, color: "gray" }}>Các liên hệ có cùng zalo</Text>
                 </View>
-                <View style={{ backgroundColor: '#c0c0c0', height: 2, marginTop: 20 }}></View>
+            </TouchableOpacity>
+            <View style={{ backgroundColor: '#d3d3d3', height: 10, marginTop: 10 }}></View>
+            <View style={{ alignItems: 'center', marginTop: 20 }}>
                 <FlatList
-                    data={DATA2}
-                    renderItem={renderItem2}
+                    data={DATA1}
+                    renderItem={renderItem1}
+                    horizontal
                 />
             </View>
+            <View style={{ backgroundColor: '#c0c0c0', height: 2, marginTop: 20 }}></View>
+            {/* <FlatList
+                    data={DATA2}
+                    renderItem={renderItem2}
+                /> */}
+            {data.map((item, index) => (
+                <Item2 key={item._id} item={item} index={index}></Item2>
+            ))}
+        </View>
     );
 };
 

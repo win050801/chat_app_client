@@ -27,7 +27,7 @@ const MessagesList = ({ route ,messages,setMessages}) => {
 		<ScrollView style={{ backgroundColor: theme.colors.white, flex: 1 }}
 			ref={ref => scrollView.current = ref}
 			onContentChange={() => {
-				console.log("scroll");
+				
 				scrollView.current.scrollToEnd({ animated: true })
 			}}
 		>
@@ -36,7 +36,7 @@ const MessagesList = ({ route ,messages,setMessages}) => {
 					key={index}
 					time={message.time}
 					isLeft={message.fromSelf !== true}
-					message={message.message}
+					message={message}
 				/>
 			))}
 		</ScrollView>

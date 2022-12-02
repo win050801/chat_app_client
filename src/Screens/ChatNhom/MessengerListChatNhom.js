@@ -43,7 +43,7 @@ const MessagesListChatNhom = ({ route, roomChat, user, messages, setMessages }) 
 					key={index}
 					time={message.time}
 					isLeft={message.fromSelf !== true}
-					message={message.message}
+					message={message}
 				/>
 
 			))}

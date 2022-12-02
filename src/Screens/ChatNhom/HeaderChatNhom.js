@@ -6,11 +6,11 @@ import Icon2 from "@expo/vector-icons/AntDesign";
 
 import { theme } from "../../Mau/theme";
 
-const HeaderChatNhom = ({ roomChat,user}) => {
+const HeaderChatNhom = ({ roomChat,user,route}) => {
 	const navigation = useNavigation()
 	return (
 		<View style={styles.container}>
-			<TouchableOpacity style={styles.backButton} >
+			<TouchableOpacity style={styles.backButton} onPress={()=>navigation.navigate("BottomTabNavigator",{user: user})}>
 				<Icon name="angle-left" size={30} color={theme.colors.white} />
 			</TouchableOpacity>
 			<View style={styles.profileOptions}>
@@ -25,7 +25,7 @@ const HeaderChatNhom = ({ roomChat,user}) => {
 					<TouchableOpacity
 						style={{ paddingHorizontal: 5 }}
 					>
-						<Icon2 onPress={() => navigation.navigate("ThemThanhVien",{roomChat,user})}
+						<Icon2 onPress={() => navigation.navigate("ThemThanhVien",{roomChat,user,socket:route.params.socket})}
 							name="addusergroup"
 							size={30}
 							color={theme.colors.white}
@@ -40,7 +40,7 @@ const HeaderChatNhom = ({ roomChat,user}) => {
 							color={theme.colors.white}
 						/>
 					</TouchableOpacity>
-					<TouchableOpacity onPress={()=>navigation.navigate("TuyChonChatNhom",{roomChat,user})} style={{ paddingHorizontal: 10 }}>
+					<TouchableOpacity onPress={()=>navigation.navigate("TuyChonChatNhom",{roomChat,user,socket:route.params.socket})} style={{ paddingHorizontal: 10 }}>
 						<Icon2
 							name="bars"
 							size={30}

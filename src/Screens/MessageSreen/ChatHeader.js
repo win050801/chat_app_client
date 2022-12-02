@@ -6,16 +6,17 @@ import Icon2 from "@expo/vector-icons/AntDesign";
 
 import { theme } from "../../Mau/theme";
 
-const ChatHeader = () => {
-	// const navigation = useNavigation()
+const ChatHeader = ({route}) => {
+	const navigation = useNavigation()
 	return (
 		<View style={styles.container}>
-			<TouchableOpacity style={styles.backButton} >
+			<TouchableOpacity style={styles.backButton} onPress={()=>navigation.navigate("BottomTabNavigator",{user: route.params.user})} >
 				<Icon name="angle-left" size={30} color={theme.colors.white} />
 			</TouchableOpacity>
 			<View style={styles.profileOptions}>
 				<TouchableOpacity style={styles.profile}>
-					<Image style={styles.hinh} source={{ uri: `${route.params.currenChat.avatarImage}` }}  />
+					{route.params.currenChat.avatarImage!=="" ?(<Image style={styles.hinh} source={{ uri: `${route.params.currenChat.avatarImage}` }}  />):(<Image style={styles.hinh} source={{ uri: `https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcScdGAFZS8P9rXmHkXMDp_vgYHzKMsrO5xSww&usqp=CAU` }}  />)}
+					
 					<View style={styles.usernameAndOnlineStatus}>
 						<Text style={styles.username}>{route.params.currenChat.username}</Text>
 						<Text style={styles.onlineStatus}>Online</Text>

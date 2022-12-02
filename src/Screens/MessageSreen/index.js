@@ -5,9 +5,10 @@ import { Api } from "../../Global/Axios/Api";
 import ChatHeader from "../MessageSreen/ChatHeader";
 import ChatInput from "../MessageSreen/ChatInput";
 import MessengerList from "../MessageSreen/MessengerList";
-
+import { LogBox } from "react-native";
 import { recieveMessageRoute } from "../../util/API"
-export function MessageScreen({ navigation, route }) {
+LogBox.ignoreLogs(["Non-serializable"]);
+export function MessageScreen({ route }) {
   // console.log(route.params);
   const from = route.params.user._id
   // console.log(route.params);
@@ -39,10 +40,11 @@ export function MessageScreen({ navigation, route }) {
           deleteFromSelf,
           deletedToAll, }) => {
           
+          
           setArrivalMessage({
             fromSelf: false,
             message: msg,
-            image: "",
+            image: image,
             files: "",
             id: id,
             avatarImage: avatarImage,

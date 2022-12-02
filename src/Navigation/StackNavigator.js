@@ -15,7 +15,13 @@ import Profile from "../Screens/Profile";
 import LoiMoiKetBan from "../Screens/LoiMoiKetBan";
 import TuyChonChatNhom from "../Screens/TuyChonChatNhom";
 import TuyChonChatDon from "../Screens/TuyChonChatDon";
-
+import TrangCaNhanKetBan from "../Screens/TrangCaNhanKetBan";
+import TrangCaNhanBanBe from "../Screens/TrangCaNhanBanBe";
+import TuyChonBanBe from "../Screens/TuyChonBanBe";
+import ThongTinBanBe from "../Screens/ThongTinBanBe";
+import TrangCaNhan from "../Screens/TrangCaNhan";
+import TuyChonTrangCaNhan from "../Screens/TuyChonTrangCaNhan";
+import ThongTinCaNhan from "../Screens/ThongTinCaNhan";
 
 
 const Stack = createStackNavigator();
@@ -78,6 +84,34 @@ const StackNavigator = () => {
 <Stack.Screen
         options={{ headerMode: 'none' }}
         name="TuyChonChatDon" component={TuyChonChatDon} />
+
+<Stack.Screen
+        options={{ headerMode: 'none' }}
+        name="TrangCaNhanKetBan" component={TrangCaNhanKetBan} />
+
+<Stack.Screen
+        options={{ headerMode: 'none' }}
+        name="TrangCaNhanBanBe" component={TrangCaNhanBanBe} />
+
+<Stack.Screen
+        options={{ headerMode: 'none' }}
+        name="TuyChonBanBe" component={TuyChonBanBe} />
+
+<Stack.Screen
+        options={{ headerMode: 'none' }}
+        name="ThongTinBanBe" component={ThongTinBanBe} />
+
+<Stack.Screen
+        options={{ headerMode: 'none' }}
+        name="ThongTinCaNhan" component={ThongTinCaNhan} />
+
+<Stack.Screen
+        options={{ headerMode: 'none' }}
+        name="TrangCaNhan" component={TrangCaNhan} />
+
+<Stack.Screen
+        options={{ headerMode: 'none' }}
+        name="TuyChonTrangCaNhan" component={TuyChonTrangCaNhan} />
 
     </Stack.Navigator>
   )

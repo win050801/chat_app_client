@@ -1,10 +1,22 @@
 import React, { useState, useRef } from "react";
 import { View, Text, StyleSheet, Alert } from "react-native";
-
+import { ListItem, Avatar, Button, Image } from 'react-native-elements';
 import { theme } from "../../Mau/theme";
-
+import ImageView from "react-native-image-viewing";
 const Message = ({ time, isLeft, message }) => {
-
+	const images = [
+		{
+			uri: "https://appchat-picture-profile.s3.us-west-1.amazonaws.com/image-1669896334146%2B1.jpg",
+		},
+	];
+	const [img,setimg]=useState([])
+	const clickImage = (img)=>{
+		
+		const imgTam = []
+		imgTam.push({uri:`${img[0]}`})
+		setimg(imgTam)
+	}
+	const [visible, setIsVisible] = useState(false);
 	const isOnLeft = (type) => {
 		if (isLeft && type === "messageContainer") {
 			return {
@@ -28,9 +40,24 @@ const Message = ({ time, isLeft, message }) => {
 	};
 	return (
 		<View style={styles.container}>
-			<View style={[styles.messageContainer,isOnLeft('messageContainer')]}>
+			<View style={[styles.messageContainer, isOnLeft('messageContainer')]}>
 				<View style={styles.messageView}>
-					<Text style={[styles.message, isOnLeft('message')]}>{message}</Text>
+					{message.message !== "" && message.message!==undefined ? (<Text style={[styles.message, isOnLeft('message')]}>{message.message}</Text>) : (
+						<View>
+							<Avatar
+								size="xlarge"
+								source={{ uri: `${message.image}` }}
+								onPress={()=>{clickImage(message.image);setIsVisible(true)}}
+							/>
+							<ImageView
+								images={img}
+								imageIndex={0}
+								visible={visible}
+								onRequestClose={() => setIsVisible(false)}
+							/>
+						</View>
+					)}
+
 				</View>
 				<View style={styles.timeView}>
 					<Text style={[styles.time, isOnLeft('time')]}>{time}</Text>

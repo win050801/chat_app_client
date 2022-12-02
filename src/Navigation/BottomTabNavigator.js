@@ -5,8 +5,9 @@ import HomeScreen from "../Screens/HomeScreen";
 
 const Tab = createBottomTabNavigator();
 
-const BottomTabNavigator = ({navigation,route}) => {
- 
+const BottomTabNavigator = ({route}) => {
+  
+
    const user = route.params.user
   
     return (
