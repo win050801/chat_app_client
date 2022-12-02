@@ -11,7 +11,6 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Avatar, Input } from 'react-native-elements';
 import { theme } from "../../Mau/theme";
 import { Api } from "../../Global/Axios/Api";
-import {addTT} from "../../util/API"
 const ProfileChatNhom = ({route}) => {
 	const navigation = useNavigation()
 	const roiNhom =async ()=>{
@@ -208,4 +207,4 @@ const styles = StyleSheet.create({
 	}
 });
 
-export default ProfileChatNhom;
+export default TuyChonChatNhom;

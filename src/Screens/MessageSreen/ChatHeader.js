@@ -6,10 +6,8 @@ import Icon2 from "@expo/vector-icons/AntDesign";
 
 import { theme } from "../../Mau/theme";
 
-const ChatHeader = ({route}) => {
-	
+const ChatHeader = () => {
 	// const navigation = useNavigation()
-	const image = 'https://media.gettyimages.com/photos/handsome-young-adult-businessman-with-stubble-picture-id1250238624?k=20&m=1250238624&s=612x612&w=0&h=35Sf2RXBiMDoaabub7XpBV--FM_wuEf8R1lbgO_GquM='
 	return (
 		<View style={styles.container}>
 			<TouchableOpacity style={styles.backButton} >
@@ -42,7 +40,7 @@ const ChatHeader = ({route}) => {
 							color={theme.colors.white}
 						/>
 					</TouchableOpacity>
-					<TouchableOpacity style={{ paddingHorizontal: 10 }}>
+					<TouchableOpacity style={{ paddingHorizontal: 10 }} onPress={() => navigation.navigate("TuyChonChatDon")}>
 						<Icon2
 							name="bars"
 							size={30}

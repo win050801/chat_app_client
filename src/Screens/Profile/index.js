@@ -6,7 +6,7 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import Feather from 'react-native-vector-icons/Feather';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
-const ProfileScreen = ({navigation}) => {
+const Profile = ({navigation}) => {
     const [edit, setEdit] = useState(true)
     return (
         <View>
@@ -64,6 +64,8 @@ const ProfileScreen = ({navigation}) => {
     )
 }
 
-export default ProfileScreen
+export default Profile
 
 const style = StyleSheet.create({})
+    
+
